@@ -15,16 +15,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: '#fff',
-          },
-          headerTintColor: '#009387',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}>
+        screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={MainTabScreen} />
         <Stack.Screen name="Ask" component={AskScreen} />
         <Stack.Screen name="Like" component={LikeScreen} />

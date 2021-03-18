@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image, TextInput} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image, TextInput} from 'react-native';
 
 const Search = () => {
   return (
@@ -9,7 +9,7 @@ const Search = () => {
         style={styles.searchIcon}
       />
       <TextInput
-        placeholderTextColor="#FFF"
+        placeholderTextColor="#000"
         style={styles.input}
         placeholder="Search"
       />
@@ -23,10 +23,11 @@ const styles = StyleSheet.create({
   searchSection: {
     flexDirection: 'row',
     backgroundColor: '#CECCCC',
-    marginHorizontal: 20,
+    marginHorizontal: 5,
     marginVertical: 10,
-    borderRadius: 40,
+    borderRadius: 10,
     alignItems: 'center',
+    height: 50,
   },
   searchIcon: {
     width: 25,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#CECCCC',
     borderTopRightRadius: 40,
     borderBottomRightRadius: 40,
-    color: '#818c88',
+    color: '#000',
     fontWeight: 'bold',
     flex: 0.93,
   },

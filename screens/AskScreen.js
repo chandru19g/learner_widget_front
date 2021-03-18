@@ -7,57 +7,92 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
+
+const {width, height} = Dimensions.get('screen');
 
 const AskScreen = () => {
   return (
-    <ScrollView>
-      <Header>
-        <Body>
-          <Title>Ask</Title>
-        </Body>
-      </Header>
-      <View style={styles.searchSection}>
-        <TextInput
-          placeholderTextColor="#FFF"
-          style={styles.input}
-          placeholder="Title"
-        />
+    <KeyboardAvoidingView style={styles.container}>
+      <View
+        style={{
+          marginVertical: 20,
+          backgroundColor: '#F4D1AE',
+          padding: 10,
+          width: '90%',
+          borderRadius: 10,
+        }}>
+        <Text style={{fontSize: 22, fontWeight: 'bold', textAlign: 'center'}}>
+          ASK YOUR QUESTION{' '}
+        </Text>
       </View>
-      <View style={styles.searchSection}>
-        <Textarea
-          placeholderTextColor="#FFF"
-          style={styles.input}
-          placeholder="Enter Question"
-        />
-      </View>
-      <View style={styles.buttonSection}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Ask Question</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      <ScrollView
+        style={{
+          flex: 1,
+        }}>
+        <View style={{flex: 1, alignSelf: 'center'}}>
+          <View style={styles.action}>
+            <TextInput
+              placeholderTextColor="grey"
+              style={styles.heading}
+              placeholder="Enter the heading or the category it belongs to"
+            />
+            <Textarea
+              placeholderTextColor="grey"
+              style={styles.question}
+              placeholder="Enter Question"
+            />
+          </View>
+        </View>
+        <View style={styles.buttonSection}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Post Question</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default AskScreen;
 
 const styles = StyleSheet.create({
-  searchSection: {
-    flexDirection: 'row',
-    backgroundColor: '#CECCCC',
-    marginHorizontal: 20,
-    marginVertical: 10,
-    borderRadius: 10,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  input: {
-    backgroundColor: '#CECCCC',
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    color: '#818c88',
-    fontWeight: 'bold',
-    flex: 0.93,
+  action: {
+    width: width,
+    alignItems: 'center',
+    height: height / 1.5,
+    justifyContent: 'space-evenly',
+  },
+  heading: {
+    width: '93%',
+    height: 60,
+    elevation: 3,
+    borderRadius: 6,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    color: '#12263A',
+    padding: 10,
+    borderColor: '#F4EDEA',
+    fontSize: 15,
+  },
+  question: {
+    width: '93%',
+    flex: 0.8,
+    elevation: 2,
+    borderRadius: 7,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    color: '#12263A',
+    padding: 10,
+    borderColor: '#F4EDEA',
+    fontSize: 15,
   },
   buttonSection: {
     alignContent: 'center',
@@ -67,8 +102,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    backgroundColor: 'blue',
-    width: '50%',
+    backgroundColor: '#0C717E',
+    width: '40%',
     padding: 5,
     alignContent: 'center',
     justifyContent: 'center',
@@ -77,7 +112,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 17,
+    fontWeight: 'bold',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
