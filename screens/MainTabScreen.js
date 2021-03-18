@@ -1,21 +1,33 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, Image} from 'react-native';
 
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+// import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './HomeScreen';
 import AskScreen from './AskScreen';
 import LikeScreen from './LikeScreen';
 import SettingScreen from './SettingScreen';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const MainTabScreen = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
-      barStyle={{backgroundColor: '#fff'}}
-      tabBarOptions={{showLabel: true}}>
+      tabBarOptions={{
+        style: {
+          height: 60,
+          width: 350,
+          flexDirection: 'column',
+          alignSelf: 'center',
+          elevation: 6,
+          borderTopStartRadius: 15,
+          borderTopEndRadius: 15,
+          backgroundColor: '#fff',
+        },
+        activeTintColor: 'red',
+      }}
+      initialRouteName="Home">
       <Tab.Screen
         name="Home"
         options={{
@@ -24,13 +36,22 @@ const MainTabScreen = () => {
               source={require('../assets/icons/home.png')}
               resizeMode="contain"
               style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? '#009387' : '#540D6E',
+                width: focused ? 35 : 25,
+                height: focused ? 35 : 25,
+                tintColor: focused ? '#66CAC9' : '#C5D8D1',
               }}
             />
           ),
-          tabBarLabel: 'Home',
+          tabBarLabel: ({focused}) => (
+            <Text
+              style={{
+                color: focused ? 'black' : '#CDCDD2',
+                fontSize: 10,
+                fontWeight: focused ? 'bold' : 'normal',
+              }}>
+              Home
+            </Text>
+          ),
         }}
         component={HomeScreen}
       />
@@ -42,23 +63,22 @@ const MainTabScreen = () => {
               source={require('../assets/icons/ask.png')}
               resizeMode="contain"
               style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? '#009387' : '#540D6E',
+                width: focused ? 35 : 25,
+                height: focused ? 35 : 25,
+                tintColor: focused ? '#66CAC9' : '#C5D8D1',
               }}
             />
           ),
-          tabBarLabel: 'Ask',
-          // ({focused}) => (
-          //   <Text
-          //     style={{
-          //       color: focused ? '#fff' : '#CDCDD2',
-          //       fontSize: 10,
-          //       fontWeight: focused ? 'bold' : 'normal',
-          //     }}>
-          //     Ask
-          //   </Text>
-          // ),
+          tabBarLabel: ({focused}) => (
+            <Text
+              style={{
+                color: focused ? 'black' : '#CDCDD2',
+                fontSize: 10,
+                fontWeight: focused ? 'bold' : 'normal',
+              }}>
+              Ask Question
+            </Text>
+          ),
         }}
         component={AskScreen}
       />
@@ -70,13 +90,22 @@ const MainTabScreen = () => {
               source={require('../assets/icons/like.png')}
               resizeMode="contain"
               style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? '#009387' : '#540D6E',
+                width: focused ? 35 : 25,
+                height: focused ? 35 : 25,
+                tintColor: focused ? '#66CAC9' : '#C5D8D1',
               }}
             />
           ),
-          tabBarLabel: 'Like',
+          tabBarLabel: ({focused}) => (
+            <Text
+              style={{
+                color: focused ? 'black' : '#CDCDD2',
+                fontSize: 10,
+                fontWeight: focused ? 'bold' : 'normal',
+              }}>
+              Saved
+            </Text>
+          ),
         }}
         component={LikeScreen}
       />
@@ -88,13 +117,22 @@ const MainTabScreen = () => {
               source={require('../assets/icons/settings.png')}
               resizeMode="contain"
               style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? '#009387' : '#540D6E',
+                width: focused ? 35 : 25,
+                height: focused ? 35 : 25,
+                tintColor: focused ? '#66CAC9' : '#C5D8D1',
               }}
             />
           ),
-          tabBarLabel: 'Settings',
+          tabBarLabel: ({focused}) => (
+            <Text
+              style={{
+                color: focused ? 'black' : '#CDCDD2',
+                fontSize: 10,
+                fontWeight: focused ? 'bold' : 'normal',
+              }}>
+              Settings
+            </Text>
+          ),
         }}
         component={SettingScreen}
       />
