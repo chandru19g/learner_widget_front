@@ -1,29 +1,38 @@
 import React from 'react';
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   StyleSheet,
-//   ScrollView,
-//   TouchableOpacity,
-//   Dimensions,
-// } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import RootStackScreen from './screens/RootStackScreen';
+// import RootStackScreen from './screens/RootStackScreen';
+import MainTabScreen from './screens/MainTabScreen';
+import AskScreen from './screens/AskScreen';
+import LikeScreen from './screens/LikeScreen';
+import SettingScreen from './screens/SettingScreen';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <RootStackScreen />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
+          headerTintColor: '#009387',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen name="Home" component={MainTabScreen} />
+        <Stack.Screen name="Ask" component={AskScreen} />
+        <Stack.Screen name="Like" component={LikeScreen} />
+        <Stack.Screen name="Setting" component={SettingScreen} />
+      </Stack.Navigator>
+      {/* <RootStackScreen /> */}
     </NavigationContainer>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {backgroundColor: '#F8F9FA', flex: 1, justifyContent: 'center'},
-//   header: {},
-//
-// });
 
 export default App;
