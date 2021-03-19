@@ -1,22 +1,20 @@
-import {Header, Title, Body, Textarea} from 'native-base';
 import React from 'react';
 import {
-  Text,
-  View,
   StyleSheet,
   ScrollView,
+  Text,
+  View,
+  Image,
+  Dimensions,
   TextInput,
   TouchableOpacity,
-  Dimensions,
-  KeyboardAvoidingView,
-  Image,
 } from 'react-native';
 
 const {width, height} = Dimensions.get('screen');
 
-const AskScreen = () => {
+const ChangePassword = ({navigation}) => {
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
           marginVertical: 20,
@@ -26,43 +24,56 @@ const AskScreen = () => {
           borderRadius: 10,
         }}>
         <Text style={{fontSize: 22, fontWeight: 'bold', textAlign: 'center'}}>
-          ASK YOUR QUESTION{' '}
           <Image
-            source={require('../assets/icons/question.png')}
+            source={require('../assets/icons/key.png')}
             resizeMode="contain"
-            style={[styles.userimg, {height: 30, width: 30}]}
+            style={[styles.userimg, {height: 20, width: 20}]}
           />{' '}
+          Change Password{' '}
         </Text>
       </View>
       <ScrollView
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1, alignSelf: 'center'}}>
+        <View style={{flex: 1}}>
           <View style={styles.action}>
             <TextInput
               placeholderTextColor="grey"
               style={styles.heading}
-              placeholder="Enter the heading or the category it belongs to"
+              placeholder="Enter Old Password"
+              secureTextEntry
             />
-            <Textarea
+            <TextInput
               placeholderTextColor="grey"
-              style={styles.question}
-              placeholder="Enter Question"
+              style={styles.heading}
+              placeholder="Enter New Password"
+              secureTextEntry
+            />
+            <TextInput
+              placeholderTextColor="grey"
+              style={styles.heading}
+              placeholder="Confirm New Password"
+              secureTextEntry
             />
           </View>
         </View>
         <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Post Question</Text>
+            <Text style={styles.buttonText}>Change{'  '}Password </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttoncancel}
+            onPress={() => navigation.goBack()}>
+            <Text style={styles.buttonTextcancel}>Go {'  '}Back</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
-export default AskScreen;
+export default ChangePassword;
 
 const styles = StyleSheet.create({
   container: {
@@ -73,8 +84,6 @@ const styles = StyleSheet.create({
   action: {
     width: width,
     alignItems: 'center',
-    height: height / 1.5,
-    justifyContent: 'space-evenly',
   },
   heading: {
     width: '93%',
@@ -87,24 +96,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: '#F4EDEA',
     fontSize: 15,
-  },
-  question: {
-    width: '93%',
-    flex: 0.8,
-    elevation: 2,
-    borderRadius: 7,
-    backgroundColor: 'white',
-    borderWidth: 2,
-    color: '#12263A',
-    padding: 10,
-    borderColor: '#F4EDEA',
-    fontSize: 15,
+    marginTop: 15,
   },
   buttonSection: {
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 15,
     borderRadius: 10,
   },
   button: {
@@ -116,8 +114,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
+  buttoncancel: {
+    backgroundColor: '#fff',
+    width: '40%',
+    padding: 5,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 15,
+  },
   buttonText: {
     color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+  buttonTextcancel: {
+    color: '#0C717E',
     fontSize: 17,
     fontWeight: 'bold',
     alignContent: 'center',
