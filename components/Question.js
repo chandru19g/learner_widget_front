@@ -14,6 +14,7 @@ const Question = ({navigation, heading, question, author, date}) => {
     <TouchableOpacity
       style={styles.wrapper}
       onPress={() => navigation.navigate('ViewQuestion')}>
+      {console.log(navigation)}
       <View style={styles.action}>
         <View style={styles.actionBody}>
           <Text style={styles.heading}>{heading.substring(0, 10)}</Text>

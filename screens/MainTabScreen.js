@@ -27,9 +27,9 @@ const MainTabScreen = () => {
         },
         activeTintColor: 'red',
       }}
-      initialRouteName="Home">
+      initialRouteName="HomeQuestion">
       <Tab.Screen
-        name="Home"
+        name="HomeQuestion"
         options={{
           tabBarIcon: ({focused}) => (
             <Image

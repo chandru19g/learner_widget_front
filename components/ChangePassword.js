@@ -16,6 +16,7 @@ const ChangePassword = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View
+      
         style={{
           marginVertical: 20,
           backgroundColor: '#F4D1AE',

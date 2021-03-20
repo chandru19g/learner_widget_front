@@ -10,6 +10,7 @@ import SettingScreen from './screens/SettingScreen';
 import ChangePassword from './components/ChangePassword';
 import QuestionAsked from './components/QuestionAsked';
 import ViewQuestion from './components/ViewQuestion';
+import HomeQuestions from './components/HomeQuestions';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const App = () => {
         initialRouteName="Home"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={MainTabScreen} />
+        <Stack.Screen name="HomeQuestion" component={HomeQuestions} />
         <Stack.Screen name="Ask" component={AskScreen} />
         <Stack.Screen name="Like" component={LikeScreen} />
         <Stack.Screen name="Setting" component={SettingScreen} />

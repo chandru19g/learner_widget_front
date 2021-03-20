@@ -17,7 +17,9 @@ let s =
 const HomeQuestions = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
+      {console.log(navigation, ' -h ')}
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}

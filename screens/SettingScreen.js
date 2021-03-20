@@ -36,21 +36,31 @@ const SettingScreen = ({navigation}) => {
           flex: 1,
         }}>
         <View style={styles.settingfield}>
-          <Text style={styles.settingtext}>Hari Karthikkeyyan R S</Text>
+          <Text style={styles.settingtext}>Hey HariKarthyk</Text>
           <View style={styles.buttonsection}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navigation.navigate('ChangePassword')}>
               <Text style={styles.buttontext}>Change Password</Text>
             </TouchableOpacity>
-            <Text style={styles.text}>Number of Questions Answered: 10</Text>
-            <Text style={styles.text}>Number of Questions Posted: 10</Text>
+            {/* <Text style={styles.text}>Number of Questions Answered: 10</Text>
+            <Text style={styles.text}>Number of Questions Posted: 10</Text> */}
             <TouchableOpacity
-              style={styles.QuestionButton}
+              style={styles.button}
               onPress={() => navigation.navigate('QuestionAsked')}>
               <Text style={styles.Questionbuttontext}>
                 View Question Posted
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('QuestionAsked')}>
+              <Text style={styles.Questionbuttontext}>Give Feedback</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('QuestionAsked')}>
+              <Text style={styles.Questionbuttontext}>Logout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttontext}>
@@ -100,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   settingtext: {
-    fontSize: 32,
+    fontSize: 22,
   },
   text: {
     fontSize: 25,
@@ -108,6 +118,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   buttonsection: {
+    width: '100%',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#0C717E',
-    width: '40%',
+    width: '100%',
     padding: 5,
     alignContent: 'center',
     justifyContent: 'center',
