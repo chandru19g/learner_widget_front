@@ -1,4 +1,4 @@
-import {Header, Title, Body, Textarea} from 'native-base';
+import {Textarea} from 'native-base';
 import React from 'react';
 import {
   Text,

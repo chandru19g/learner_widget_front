@@ -1,8 +1,24 @@
+import {Textarea} from 'native-base';
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+
+//? Imported Component for Like Button
+import LikeComponent from '../components/LikeComponent';
+
+const {width, height} = Dimensions.get('screen');
 
 const ViewQuestion = ({navigation, route}) => {
   const {heading, author, date, id, question} = route.params;
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <View
@@ -17,14 +33,22 @@ const ViewQuestion = ({navigation, route}) => {
           alignItems: 'center',
           justifyContent: 'space-evenly',
         }}>
-        <Text
-          onPress={() => navigation.goBack()}
+        {/* //?Button for Going Back */}
+        <TouchableOpacity
           style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-          }}>
-          {'<'}
-        </Text>
+            width: 30,
+            alignContent: 'flex-start',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch',
+          }}
+          onPress={() => navigation.goBack()}>
+          <Image
+            source={require('../assets/icons/back.png')}
+            resizeMode="contain"
+            style={[styles.userimg, {height: 20, width: 20, marginLeft: 5}]}
+          />
+        </TouchableOpacity>
+        {/* //? Heading of the Page */}
         <Text
           style={{
             fontSize: 22,
@@ -33,7 +57,6 @@ const ViewQuestion = ({navigation, route}) => {
           The Learner Widget
         </Text>
       </View>
-
       <ScrollView style={{width: '100%'}}>
         <View
           style={{
@@ -41,17 +64,58 @@ const ViewQuestion = ({navigation, route}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+          {/* //? Heading Section of the question */}
           <View style={styles.heading}>
             <Text style={styles.headingText}>{heading}</Text>
           </View>
+          {/* //? Question Section */}
           <View style={styles.question}>
             <Text style={styles.questionText}>{question}</Text>
             <View style={styles.details}>
               <Text style={styles.detailsText}>{author}</Text>
+              {/* //?Imported Like Component  */}
+              <LikeComponent />
               <Text style={styles.detailsText}>{date}</Text>
             </View>
           </View>
-          <View></View>
+        </View>
+        <View>
+          <Text style={styles.header}>User1:</Text>
+          <Text style={styles.body}>
+            {' '}
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+          </Text>
+          <Text style={styles.header}>User2:</Text>
+          <Text style={styles.body}>
+            {' '}
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+            Answer Answer Answer Answer Answer Answer Answer Answer Answer
+          </Text>
+        </View>
+        {/* //?Input Field for Writing Comment */}
+        <View style={styles.action}>
+          <Textarea
+            placeholderTextColor="grey"
+            style={styles.quescomment}
+            placeholder="Add Comment . . . . . . . . . . . . . ."
+          />
+        </View>
+        {/* //? Buuton for Adding Comment */}
+        <View style={styles.buttonSection}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              Alert.alert('Success', 'Comment Added Successfully')
+            }>
+            <Text style={styles.buttonText}>Add Comment</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -77,6 +141,24 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'red',
   },
+  action: {
+    width: width,
+    alignItems: 'center',
+    height: height / 2.5,
+    justifyContent: 'space-evenly',
+  },
+  quescomment: {
+    width: '93%',
+    flex: 0.8,
+    elevation: 2,
+    borderRadius: 7,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    color: '#12263A',
+    padding: 10,
+    borderColor: '#F4EDEA',
+    fontSize: 15,
+  },
   questionText: {
     fontWeight: '400',
     fontSize: 16,
@@ -89,6 +171,44 @@ const styles = StyleSheet.create({
   },
   detailsText: {
     color: 'grey',
+  },
+  buttonSection: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    borderRadius: 10,
+  },
+  button: {
+    backgroundColor: '#0C717E',
+    width: '40%',
+    padding: 5,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+  header: {
+    fontWeight: 'bold',
+    marginLeft: 20,
+    textDecorationLine: 'underline',
+    color: '#6495ed',
+    fontSize: 20,
+  },
+  body: {
+    marginLeft: 20,
+    marginRight: 15,
+    fontSize: 15,
+    padding: 5,
   },
 });
 
