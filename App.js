@@ -10,6 +10,17 @@ const App = () => {
   return (
     <NavigationContainer>
       <RootStackScreen />
+      {/* <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={MainTabScreen} />
+        <Stack.Screen name="Ask" component={AskScreen} />
+        <Stack.Screen name="Like" component={LikeScreen} />
+        <Stack.Screen name="Setting" component={SettingScreen} />
+        <Stack.Screen name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen name="QuestionAsked" component={QuestionAsked} />
+        <Stack.Screen name="ViewQuestion" component={ViewQuestion} />
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };
