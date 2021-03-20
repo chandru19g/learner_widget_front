@@ -16,7 +16,6 @@ const ChangePassword = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View
-      
         style={{
           marginVertical: 20,
           backgroundColor: '#F4D1AE',
@@ -61,12 +60,12 @@ const ChangePassword = ({navigation}) => {
         </View>
         <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Change{'  '}Password </Text>
+            <Text style={styles.buttonText}>Change Password </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttoncancel}
             onPress={() => navigation.goBack()}>
-            <Text style={styles.buttonTextcancel}>Go {'  '}Back</Text>
+            <Text style={styles.buttonTextcancel}>Go Back</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -105,10 +104,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     borderRadius: 10,
+    width: '100%',
   },
   button: {
     backgroundColor: '#0C717E',
-    width: '40%',
+    width: '90%',
     padding: 5,
     alignContent: 'center',
     justifyContent: 'center',
