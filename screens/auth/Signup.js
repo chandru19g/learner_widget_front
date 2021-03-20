@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
 
 const Signup = ({navigation}) => {
   return (
@@ -49,7 +47,9 @@ const Signup = ({navigation}) => {
           />
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => navigation.navigate('MainTabScreen')}>
             <LinearGradient
               colors={['#08d4c4', '#01ab9d']}
               style={styles.signIn}>
@@ -58,7 +58,7 @@ const Signup = ({navigation}) => {
                   ([styles.textSign],
                   {color: '#fff', fontWeight: 'bold', fontSize: 20})
                 }>
-                Signup
+                Create Account
               </Text>
             </LinearGradient>
           </TouchableOpacity>
