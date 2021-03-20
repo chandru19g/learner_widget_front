@@ -18,30 +18,35 @@ const HomeQuestions = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}

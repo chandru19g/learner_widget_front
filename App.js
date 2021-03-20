@@ -10,6 +10,7 @@ import SettingScreen from './screens/SettingScreen';
 import ChangePassword from './components/ChangePassword';
 import QuestionAsked from './components/QuestionAsked';
 import ViewQuestion from './components/ViewQuestion';
+import HomeQuestions from './components/HomeQuestions';
 
 const Stack = createStackNavigator();
 

@@ -8,26 +8,27 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import Question from './Question';
 
 const {width} = Dimensions.get('window');
 
-const Question = ({heading, question, author, date}) => {
-  return (
-    <TouchableOpacity style={styles.wrapper}>
-      <View style={styles.action}>
-        <View style={styles.actionBody}>
-          <Text style={styles.heading}>{heading.substring(0, 10)}</Text>
+// const Question = ({heading, question, author, date}) => {
+//   return (
+//     <TouchableOpacity style={styles.wrapper}>
+//       <View style={styles.action}>
+//         <View style={styles.actionBody}>
+//           <Text style={styles.heading}>{heading.substring(0, 10)}</Text>
 
-          <Text style={styles.question}>{question}</Text>
-          <View style={styles.actionFooter}>
-            <Text style={styles.author}>{author}</Text>
-            <Text style={styles.date}>{date}</Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
+//           <Text style={styles.question}>{question}</Text>
+//           <View style={styles.actionFooter}>
+//             <Text style={styles.author}>{author}</Text>
+//             <Text style={styles.date}>{date}</Text>
+//           </View>
+//         </View>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// };
 
 let s =
   'Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world';
@@ -67,36 +68,42 @@ const QuestionAsked = ({navigation}) => {
           flex: 1,
         }}>
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
           date={'MAR 5 , 2020'}
         />
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
           date={'MAR 5 , 2020'}
         />
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
           date={'MAR 5 , 2020'}
         />
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
           date={'MAR 5 , 2020'}
         />
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
           date={'MAR 5 , 2020'}
         />
         <Question
+          navigation={navigation}
           heading={'Heading'}
           question={s}
           author={'Author'}
