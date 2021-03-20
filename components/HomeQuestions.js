@@ -17,7 +17,6 @@ let s =
 const HomeQuestions = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
-      {console.log(navigation, ' -h ')}
       <Question
         navigation={navigation}
         heading={'Heading'}
@@ -26,24 +25,28 @@ const HomeQuestions = ({navigation}) => {
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}
         date={'MAR 5 , 2020'}
       />
       <Question
+        navigation={navigation}
         heading={'Heading'}
         question={s}
         author={'Author'}

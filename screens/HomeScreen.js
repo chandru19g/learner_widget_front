@@ -6,13 +6,13 @@ import HomeQuestions from '../components/HomeQuestions';
 
 const {height} = Dimensions.get('screen');
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View>
       <View style={styles.container}>
         <Search />
         <ScrollView style={{height: height - 200}}>
-          <HomeQuestions />
+          <HomeQuestions navigation={navigation} />
         </ScrollView>
       </View>
     </View>

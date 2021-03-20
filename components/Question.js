@@ -9,12 +9,19 @@ import {
 
 const {width} = Dimensions.get('window');
 
-const Question = ({navigation, heading, question, author, date}) => {
+const Question = ({navigation, heading, question, author, date, id = '1'}) => {
   return (
     <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.navigate('ViewQuestion')}>
-      {console.log(navigation)}
+      onPress={() =>
+        navigation.navigate('ViewQuestion', {
+          heading: heading,
+          question: question,
+          author: author,
+          date: date,
+          id: id,
+        })
+      }>
       <View style={styles.action}>
         <View style={styles.actionBody}>
           <Text style={styles.heading}>{heading.substring(0, 10)}</Text>
