@@ -38,7 +38,9 @@ const Signup = ({navigation}) => {
           />
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Home')}
+            style={styles.signIn}>
             <LinearGradient
               colors={['#08d4c4', '#01ab9d']}
               style={styles.signIn}>
