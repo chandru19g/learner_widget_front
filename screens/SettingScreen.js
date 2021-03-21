@@ -9,10 +9,42 @@ import {
   Image,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 const {width, height} = Dimensions.get('screen');
 
 const SettingScreen = ({navigation}) => {
-  return (
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      if (value === null) {
+        setUser(value);
+        navigation.replace('Signin');
+      } else setUser(JSON.parse(value));
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const logout = async () => {
+    console.log('Cam');
+    try {
+      await AsyncStorage.removeItem('@learner_widget');
+      getUser();
+    } catch (e) {
+      // saving error
+    }
+  };
+  return user === null ? (
+    <View>
+      <Text>Loading</Text>
+    </View>
+  ) : (
     <View style={styles.container}>
       <View
         style={{
@@ -27,7 +59,8 @@ const SettingScreen = ({navigation}) => {
             source={require('../assets/icons/user.png')}
             resizeMode="contain"
             style={[styles.userimg, {height: 20, width: 20}]}
-          />{' '}
+          />
+          {'  '}
           Account Settings
         </Text>
       </View>
@@ -36,7 +69,8 @@ const SettingScreen = ({navigation}) => {
           flex: 1,
         }}>
         <View style={styles.settingfield}>
-          <Text style={styles.settingtext}>Hey HariKarthyk</Text>
+          {console.log(user)}
+          <Text style={styles.settingtext}>Hey {user.name}</Text>
           <View style={styles.buttonsection}>
             <TouchableOpacity
               style={styles.button}
@@ -47,19 +81,17 @@ const SettingScreen = ({navigation}) => {
             <Text style={styles.text}>Number of Questions Posted: 10</Text> */}
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+              onPress={() =>
+                navigation.navigate('QuestionAsked', {userId: user._id})
+              }>
               <Text style={styles.Questionbuttontext}>
                 View Question Posted
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.Questionbuttontext}>Give Feedback</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+            <TouchableOpacity style={styles.button} onPress={() => logout()}>
               <Text style={styles.Questionbuttontext}>Logout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>

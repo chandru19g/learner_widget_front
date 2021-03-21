@@ -5,11 +5,72 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
+import {createAccountHelper} from '../helper/login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 
 const Signup = ({navigation}) => {
+  const [input, setInput] = useState({
+    name: '',
+    email: '',
+    password: '',
+    re_enter: '',
+  });
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      if (value !== null) {
+        setUser(value);
+        navigation.replace('Home');
+      } else {
+        setUser(null);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const setLocalStorage = async value => {
+    try {
+      await AsyncStorage.setItem('@learner_widget', JSON.stringify(value));
+    } catch (e) {
+      // saving error
+    }
+  };
+  const handleCreateAccountListener = () => {
+    setLoading(true);
+    if (input.password !== input.re_enter) {
+      setLoading(false);
+      Alert.alert('Error', 'password mis-match error');
+      return;
+    }
+    createAccountHelper(input).then(result => {
+      if (!result) {
+        setLoading(false);
+        Alert.alert('Error', 'Error in network');
+        return;
+      }
+      if (result.error) {
+        setLoading(false);
+        setInput({...input, email: '', password: '', re_enter: ''});
+        Alert.alert('Error', result.messsage);
+        return;
+      }
+      setLocalStorage(result.user);
+      setLoading(false);
+      navigation.replace('Home');
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -20,7 +81,11 @@ const Signup = ({navigation}) => {
       <View style={styles.footer}>
         <Text style={styles.text_footer}>Username</Text>
         <View style={styles.action}>
-          <TextInput placeholder="Username" style={styles.textInput} />
+          <TextInput
+            placeholder="Username"
+            onChangeText={e => setInput({...input, name: e})}
+            style={styles.textInput}
+          />
         </View>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
@@ -28,6 +93,7 @@ const Signup = ({navigation}) => {
             placeholder="Your Email"
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText={e => setInput({...input, email: e})}
           />
         </View>
         <Text style={styles.text_footer}>Password</Text>
@@ -36,6 +102,7 @@ const Signup = ({navigation}) => {
             placeholder="Password"
             style={styles.textInput}
             secureTextEntry={true}
+            onChangeText={e => setInput({...input, password: e})}
           />
         </View>
         <Text style={styles.text_footer}>Confirm Password</Text>
@@ -44,47 +111,57 @@ const Signup = ({navigation}) => {
             placeholder="Confirm Password"
             style={styles.textInput}
             secureTextEntry={true}
+            onChangeText={e => {
+              console.log(e);
+              setInput({...input, re_enter: e});
+            }}
           />
         </View>
-        <View style={styles.button}>
-          <TouchableOpacity
-            style={styles.signIn}
-            onPress={() => navigation.navigate('MainTabScreen')}>
-            <LinearGradient
-              colors={['#08d4c4', '#01ab9d']}
-              style={styles.signIn}>
+        {loading ? (
+          <View style={styles.loading}>
+            <Text style={styles.loadingText}>Loading</Text>
+          </View>
+        ) : (
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={() => handleCreateAccountListener()}>
+              <LinearGradient
+                colors={['#08d4c4', '#01ab9d']}
+                style={styles.signIn}>
+                <Text
+                  style={
+                    ([styles.textSign],
+                    {color: '#fff', fontWeight: 'bold', fontSize: 20})
+                  }>
+                  Create Account
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Signin')}
+              style={
+                ([styles.signIn],
+                {
+                  borderColor: '#01ab9d',
+                  borderWidth: 1,
+                  width: '100%',
+                  marginTop: 10,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  alignItems: 'center',
+                })
+              }>
               <Text
                 style={
                   ([styles.textSign],
-                  {color: '#fff', fontWeight: 'bold', fontSize: 20})
+                  {padding: 5, fontSize: 20, fontWeight: 'bold'})
                 }>
-                Create Account
+                Signin
               </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Signin')}
-            style={
-              ([styles.signIn],
-              {
-                borderColor: '#01ab9d',
-                borderWidth: 1,
-                width: '100%',
-                marginTop: 10,
-                justifyContent: 'center',
-                borderRadius: 5,
-                alignItems: 'center',
-              })
-            }>
-            <Text
-              style={
-                ([styles.textSign],
-                {padding: 5, fontSize: 20, fontWeight: 'bold'})
-              }>
-              Signin
-            </Text>
-          </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -131,9 +208,22 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     color: '#05375a',
-    // borderColor: '#009387',
-    // borderWidth: 0.5,
     backgroundColor: '#fff',
+  },
+  loadingText: {
+    padding: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  loading: {
+    width: '100%',
+    marginVertical: 10,
+    backgroundColor: '#009387',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    elevation: 2,
   },
   button: {
     alignItems: 'center',

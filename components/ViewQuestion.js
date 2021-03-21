@@ -1,5 +1,7 @@
 import {Textarea} from 'native-base';
 import React from 'react';
+import {useEffect} from 'react';
+import {useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -10,15 +12,19 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
+import {useIsFocused} from '@react-navigation/native';
 //? Imported Component for Like Button
 import LikeComponent from '../components/LikeComponent';
 
 const {width, height} = Dimensions.get('screen');
 
 const ViewQuestion = ({navigation, route}) => {
-  const {heading, author, date, id, question} = route.params;
+  const {heading, author, date, _id, question, all} = route.params;
 
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    setComments(all.answers);
+  }, [useIsFocused]);
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <View
@@ -72,34 +78,22 @@ const ViewQuestion = ({navigation, route}) => {
           <View style={styles.question}>
             <Text style={styles.questionText}>{question}</Text>
             <View style={styles.details}>
-              <Text style={styles.detailsText}>{author}</Text>
-              {/* //?Imported Like Component  */}
-              <LikeComponent />
+              <Text style={styles.detailsText}>{author.name}</Text>
               <Text style={styles.detailsText}>{date}</Text>
+              <LikeComponent />
             </View>
           </View>
         </View>
         <View>
-          <Text style={styles.header}>User1:</Text>
-          <Text style={styles.body}>
-            {' '}
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-          </Text>
-          <Text style={styles.header}>User2:</Text>
-          <Text style={styles.body}>
-            {' '}
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-            Answer Answer Answer Answer Answer Answer Answer Answer Answer
-          </Text>
+          {comments.map((comment, index) => {
+            return (
+              <View key={index}>
+                <Text style={styles.header}>{comment.user}</Text>
+                <Text style={styles.body}>{comment.comment}</Text>
+              </View>
+            );
+          })}
         </View>
-        {/* //?Input Field for Writing Comment */}
         <View style={styles.action}>
           <Textarea
             placeholderTextColor="grey"
@@ -165,8 +159,9 @@ const styles = StyleSheet.create({
   },
   details: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     marginVertical: 10,
+    alignItems: 'center',
     width: '100%',
   },
   detailsText: {
@@ -202,7 +197,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     textDecorationLine: 'underline',
     color: '#6495ed',
-    fontSize: 20,
+    fontSize: 15,
   },
   body: {
     marginLeft: 20,

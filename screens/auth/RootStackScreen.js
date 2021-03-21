@@ -11,8 +11,6 @@ import SettingScreen from '../SettingScreen';
 import ChangePassword from '../../components/ChangePassword';
 import QuestionAsked from '../../components/QuestionAsked';
 import ViewQuestion from '../../components/ViewQuestion';
-import HomeQuestions from '../../components/HomeQuestions';
-import HomeScreen from '../HomeScreen';
 
 const RootStack = createStackNavigator();
 

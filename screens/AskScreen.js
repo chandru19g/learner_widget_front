@@ -1,5 +1,5 @@
 import {Textarea} from 'native-base';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -10,11 +10,51 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Image,
+  Alert,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {addQuestionHelper} from './helper/question';
 const {width, height} = Dimensions.get('screen');
 
-const AskScreen = () => {
+const AskScreen = ({navigation}) => {
+  const [input, setInput] = useState({
+    heading: 'From Frontend',
+    description:
+      'Hello World Hey everyone this is my first Question from Frontend ||',
+    user: '',
+  });
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      if (value === null) {
+        setUser(value);
+        navigation.replace('Signin');
+      } else setUser(JSON.parse(value));
+    } catch (e) {
+      // error reading value
+    }
+  };
+  const addQuestionHandleListener = () => {
+    input.user = user._id;
+    if (!input.user) {
+      Alert.alert('Error', 'Try again in a minute');
+      return;
+    }
+    addQuestionHelper(input).then(result => {
+      if (result.error) {
+        Alert.alert('Error', result.message);
+        return;
+      }
+      Alert.alert('Success', result.message);
+      setInput({...input, heading: '', description: ''});
+      navigation.replace('Home');
+    });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View
@@ -41,11 +81,15 @@ const AskScreen = () => {
         <View style={{flex: 1, alignSelf: 'center'}}>
           <View style={styles.action}>
             <TextInput
+              value={input.heading}
+              onChangeText={e => setInput({...input, heading: e})}
               placeholderTextColor="grey"
               style={styles.heading}
               placeholder="Enter the heading or the category it belongs to"
             />
             <Textarea
+              value={input.description}
+              onChangeText={e => setInput({...input, description: e})}
               placeholderTextColor="grey"
               style={styles.question}
               placeholder="Enter Question"
@@ -53,7 +97,9 @@ const AskScreen = () => {
           </View>
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => addQuestionHandleListener()}>
             <Text style={styles.buttonText}>Post Question</Text>
           </TouchableOpacity>
         </View>

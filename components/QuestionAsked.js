@@ -1,4 +1,6 @@
 import React from 'react';
+import {useEffect} from 'react';
+import {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,33 +9,28 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
+import {getQuestionByUserHelper} from '../screens/helper/question';
 import Question from './Question';
 
 const {width} = Dimensions.get('window');
 
-// const Question = ({heading, question, author, date}) => {
-//   return (
-//     <TouchableOpacity style={styles.wrapper}>
-//       <View style={styles.action}>
-//         <View style={styles.actionBody}>
-//           <Text style={styles.heading}>{heading.substring(0, 10)}</Text>
-
-//           <Text style={styles.question}>{question}</Text>
-//           <View style={styles.actionFooter}>
-//             <Text style={styles.author}>{author}</Text>
-//             <Text style={styles.date}>{date}</Text>
-//           </View>
-//         </View>
-//       </View>
-//     </TouchableOpacity>
-//   );
-// };
-
-let s =
-  'Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world Hello world';
-
-const QuestionAsked = ({navigation}) => {
+const QuestionAsked = ({navigation, route}) => {
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    console.log(route.params.userId);
+    getQuestionByUserHelper(route.params.userId).then(result => {
+      if (result.error) {
+        Alert.alert(result.message);
+        return;
+      }
+      setLoading(false);
+      console.log(result);
+      setQuestions(result.questions);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View
@@ -63,53 +60,38 @@ const QuestionAsked = ({navigation}) => {
           />{' '}
         </Text>
       </View>
-      <ScrollView
-        style={{
-          flex: 1,
-        }}>
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-        <Question
-          navigation={navigation}
-          heading={'Heading'}
-          question={s}
-          author={'Author'}
-          date={'MAR 5 , 2020'}
-        />
-      </ScrollView>
+      {loading ? (
+        <View>
+          <Text>Loading</Text>
+        </View>
+      ) : (
+        <ScrollView
+          style={{
+            flex: 1,
+          }}>
+          {questions.map(question => {
+            return (
+              <Question
+                key={question._id}
+                navigation={navigation}
+                heading={question.heading}
+                question={question.description}
+                author={question.user}
+                date={question.updatedAt.substring(0, 10)}
+                _id={question._id}
+                all={question}
+              />
+            );
+          })}
+          {!loading && questions.length === 0 ? (
+            <View>
+              <Text>No Question posted yet</Text>
+            </View>
+          ) : (
+            <View></View>
+          )}
+        </ScrollView>
+      )}
     </View>
   );
 };
