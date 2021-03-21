@@ -9,6 +9,7 @@ export const getAllQuestionHelper = () => {
 };
 
 export const addQuestionHelper = input => {
+  console.log(input);
   return fetch(`${API}/add/question/${input.user}`, {
     method: 'POST',
     headers: {

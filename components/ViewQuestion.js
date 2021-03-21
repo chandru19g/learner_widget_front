@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
+import {useIsFocused} from '@react-navigation/native';
 //? Imported Component for Like Button
 import LikeComponent from '../components/LikeComponent';
 
@@ -24,7 +24,7 @@ const ViewQuestion = ({navigation, route}) => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
     setComments(all.answers);
-  }, []);
+  }, [useIsFocused]);
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <View
