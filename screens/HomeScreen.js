@@ -20,7 +20,6 @@ const HomeScreen = ({navigation}) => {
         setQuestions(result.questions);
         setLoading(false);
       });
-      console.log('Invoked Home Page');
     });
   }, [navigation]);
 
