@@ -25,10 +25,7 @@ class LikeComponent extends Component {
         source={require('../assets/icons/like.png')}
         resizeMode="contain"
         style={{
-          width: 20,
           height: 20,
-          marginRight: 15,
-          marginTop: 10,
           tintColor: '#FF8396',
         }}
       />
@@ -37,12 +34,9 @@ class LikeComponent extends Component {
         source={require('../assets/icons/like.png')}
         resizeMode="contain"
         style={{
-          width: 20,
           height: 20,
-          marginRight: 15,
-          marginTop: 10,
-          tintColor: 'black',
-          borderColor: '#FF8396',
+          tintColor: 'grey',
+          borderColor: 'red',
         }}
       />
     );
@@ -50,10 +44,10 @@ class LikeComponent extends Component {
     return (
       <View
         style={{
-          width: '50%',
+          // width: '50%',
           backgroundColor: 'white',
           flex: 1,
-          marginLeft: '55%',
+          // marginLeft: '55%',
         }}>
         {/* //?Like Button */}
         <TouchableOpacity onPress={this.handleClick}>
