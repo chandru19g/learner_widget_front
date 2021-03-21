@@ -9,9 +9,38 @@ import {
   Image,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 const {width, height} = Dimensions.get('screen');
 
 const SettingScreen = ({navigation}) => {
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      console.log(value);
+      if (value === null) {
+        setUser(value);
+        navigation.replace('Signin');
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const logout = async () => {
+    console.log('Cam');
+    try {
+      await AsyncStorage.removeItem('@learner_widget');
+      getUser();
+    } catch (e) {
+      // saving error
+    }
+  };
   return (
     <View style={styles.container}>
       <View
@@ -52,14 +81,10 @@ const SettingScreen = ({navigation}) => {
                 View Question Posted
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+            <TouchableOpacity style={styles.button}>
               <Text style={styles.Questionbuttontext}>Give Feedback</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+            <TouchableOpacity style={styles.button} onPress={() => logout()}>
               <Text style={styles.Questionbuttontext}>Logout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>

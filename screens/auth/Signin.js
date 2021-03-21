@@ -4,15 +4,61 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Button,
   TextInput,
+  Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
+import {loginHelper} from '../helper/login';
 
 const Signup = ({navigation}) => {
+  const [input, setInput] = useState({email: '', password: ''});
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      if (value !== null) {
+        setUser(value);
+        navigation.replace('Home');
+      } else {
+        setUser(null);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+  const setLocalStorage = async value => {
+    try {
+      await AsyncStorage.setItem('@learner_widget', JSON.stringify(value));
+      console.log('Setting Item', value);
+    } catch (e) {
+      // saving error
+    }
+  };
+  const loginHandleListener = () => {
+    loginHelper(input)
+      .then(result => {
+        if (!result) {
+          Alert.alert('Error', 'Error in network');
+          return;
+        }
+        if (result.error) {
+          setInput({...input, email: '', password: '', re_enter: ''});
+          Alert.alert('Error', result.messsage);
+          return;
+        }
+        setLocalStorage(result.user);
+        navigation.replace('Home');
+      })
+      .catch(error => console.error(error));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,6 +71,7 @@ const Signup = ({navigation}) => {
         <View style={styles.action}>
           <TextInput
             placeholder="Your Email"
+            onChangeText={e => setInput({...input, email: e})}
             style={styles.textInput}
             autoCapitalize="none"
           />
@@ -32,6 +79,7 @@ const Signup = ({navigation}) => {
         <Text style={styles.text_footer}>Password</Text>
         <View style={styles.action}>
           <TextInput
+            onChangeText={e => setInput({...input, password: e})}
             placeholder="Password"
             style={styles.textInput}
             secureTextEntry={true}
@@ -39,7 +87,7 @@ const Signup = ({navigation}) => {
         </View>
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => loginHandleListener()}
             style={styles.signIn}>
             <LinearGradient
               colors={['#08d4c4', '#01ab9d']}

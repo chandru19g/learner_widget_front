@@ -5,11 +5,68 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
+import {createAccountHelper} from '../helper/login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from 'react';
 
 const Signup = ({navigation}) => {
+  const [input, setInput] = useState({
+    name: '',
+    email: '',
+    password: '',
+    re_enter: '',
+  });
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      console.log(value);
+      if (value !== null) {
+        setUser(value);
+        navigation.replace('Home');
+      } else {
+        setUser(null);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const setLocalStorage = async value => {
+    try {
+      await AsyncStorage.setItem('@learner_widget', JSON.stringify(value));
+      console.log('Setting Item', value);
+    } catch (e) {
+      // saving error
+    }
+  };
+  const handleCreateAccountListener = () => {
+    if (input.password !== input.re_enter) {
+      Alert.alert('Error', 'password mis-match error');
+      return;
+    }
+    createAccountHelper(input).then(result => {
+      if (!result) {
+        Alert.alert('Error', 'Error in network');
+        return;
+      }
+      if (result.error) {
+        setInput({...input, email: '', password: '', re_enter: ''});
+        Alert.alert('Error', result.messsage);
+        return;
+      }
+      setLocalStorage(result.user);
+      navigation.replace('Home');
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -20,7 +77,11 @@ const Signup = ({navigation}) => {
       <View style={styles.footer}>
         <Text style={styles.text_footer}>Username</Text>
         <View style={styles.action}>
-          <TextInput placeholder="Username" style={styles.textInput} />
+          <TextInput
+            placeholder="Username"
+            onChangeText={e => setInput({...input, name: e})}
+            style={styles.textInput}
+          />
         </View>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
@@ -28,6 +89,7 @@ const Signup = ({navigation}) => {
             placeholder="Your Email"
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText={e => setInput({...input, email: e})}
           />
         </View>
         <Text style={styles.text_footer}>Password</Text>
@@ -36,6 +98,7 @@ const Signup = ({navigation}) => {
             placeholder="Password"
             style={styles.textInput}
             secureTextEntry={true}
+            onChangeText={e => setInput({...input, password: e})}
           />
         </View>
         <Text style={styles.text_footer}>Confirm Password</Text>
@@ -44,12 +107,16 @@ const Signup = ({navigation}) => {
             placeholder="Confirm Password"
             style={styles.textInput}
             secureTextEntry={true}
+            onChangeText={e => {
+              console.log(e);
+              setInput({...input, re_enter: e});
+            }}
           />
         </View>
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signIn}
-            onPress={() => navigation.navigate('Home')}>
+            onPress={() => handleCreateAccountListener()}>
             <LinearGradient
               colors={['#08d4c4', '#01ab9d']}
               style={styles.signIn}>
