@@ -16,6 +16,7 @@ import {loginHelper} from '../helper/login';
 const Signup = ({navigation}) => {
   const [input, setInput] = useState({email: '', password: ''});
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem('@learner_widget');
@@ -42,18 +43,22 @@ const Signup = ({navigation}) => {
     }
   };
   const loginHandleListener = () => {
+    setLoading(true);
     loginHelper(input)
       .then(result => {
         if (!result) {
+          setLoading(false);
           Alert.alert('Error', 'Error in network');
           return;
         }
         if (result.error) {
+          setLoading(false);
           setInput({...input, email: '', password: '', re_enter: ''});
           Alert.alert('Error', result.messsage);
           return;
         }
         setLocalStorage(result.user);
+        setLoading(false);
         navigation.replace('Home');
       })
       .catch(error => console.error(error));
@@ -85,45 +90,51 @@ const Signup = ({navigation}) => {
             secureTextEntry={true}
           />
         </View>
-        <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => loginHandleListener()}
-            style={styles.signIn}>
-            <LinearGradient
-              colors={['#08d4c4', '#01ab9d']}
+        {loading ? (
+          <View style={styles.loading}>
+            <Text style={styles.loadingText}>Loading</Text>
+          </View>
+        ) : (
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={() => loginHandleListener()}
               style={styles.signIn}>
+              <LinearGradient
+                colors={['#08d4c4', '#01ab9d']}
+                style={styles.signIn}>
+                <Text
+                  style={
+                    ([styles.textSign],
+                    {color: '#fff', fontWeight: 'bold', fontSize: 20})
+                  }>
+                  Signin
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Signup')}
+              style={
+                ([styles.signIn],
+                {
+                  borderColor: '#01ab9d',
+                  borderWidth: 1,
+                  width: '100%',
+                  marginTop: 10,
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                  alignItems: 'center',
+                })
+              }>
               <Text
                 style={
                   ([styles.textSign],
-                  {color: '#fff', fontWeight: 'bold', fontSize: 20})
+                  {padding: 5, fontSize: 20, fontWeight: 'bold'})
                 }>
-                Signin
+                Signup
               </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Signup')}
-            style={
-              ([styles.signIn],
-              {
-                borderColor: '#01ab9d',
-                borderWidth: 1,
-                width: '100%',
-                marginTop: 10,
-                justifyContent: 'center',
-                borderRadius: 5,
-                alignItems: 'center',
-              })
-            }>
-            <Text
-              style={
-                ([styles.textSign],
-                {padding: 5, fontSize: 20, fontWeight: 'bold'})
-              }>
-              Signup
-            </Text>
-          </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -135,6 +146,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#009387',
+  },
+  loadingText: {
+    padding: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  loading: {
+    width: '100%',
+    marginVertical: 10,
+    backgroundColor: '#009387',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    elevation: 2,
   },
   header: {
     flex: 0.5,

@@ -59,7 +59,8 @@ const SettingScreen = ({navigation}) => {
             source={require('../assets/icons/user.png')}
             resizeMode="contain"
             style={[styles.userimg, {height: 20, width: 20}]}
-          />{' '}
+          />
+          {'  '}
           Account Settings
         </Text>
       </View>
@@ -80,7 +81,9 @@ const SettingScreen = ({navigation}) => {
             <Text style={styles.text}>Number of Questions Posted: 10</Text> */}
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('QuestionAsked')}>
+              onPress={() =>
+                navigation.navigate('QuestionAsked', {userId: user._id})
+              }>
               <Text style={styles.Questionbuttontext}>
                 View Question Posted
               </Text>
