@@ -1,5 +1,6 @@
 import {Textarea} from 'native-base';
 import React from 'react';
+import {useEffect} from 'react';
 import {useState} from 'react';
 import {
   Image,
@@ -18,12 +19,12 @@ import LikeComponent from '../components/LikeComponent';
 const {width, height} = Dimensions.get('screen');
 
 const ViewQuestion = ({navigation, route}) => {
-  const {heading, author, date, id, question} = route.params;
+  const {heading, author, date, _id, question, all} = route.params;
 
-  const [comments, setComments] = useState([
-    {user: 'john', comment: 'Answer will be this ', id: 1},
-    {id: 2, user: 'john', comment: 'Answer will be this '},
-  ]);
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    setComments(all.answers);
+  }, []);
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <View
@@ -77,7 +78,7 @@ const ViewQuestion = ({navigation, route}) => {
           <View style={styles.question}>
             <Text style={styles.questionText}>{question}</Text>
             <View style={styles.details}>
-              <Text style={styles.detailsText}>{author}</Text>
+              <Text style={styles.detailsText}>{author.name}</Text>
               <Text style={styles.detailsText}>{date}</Text>
               <LikeComponent />
             </View>

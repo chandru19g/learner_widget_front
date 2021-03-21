@@ -18,11 +18,10 @@ const SettingScreen = ({navigation}) => {
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem('@learner_widget');
-      console.log(value);
       if (value === null) {
         setUser(value);
         navigation.replace('Signin');
-      }
+      } else setUser(JSON.parse(value));
     } catch (e) {
       // error reading value
     }
@@ -41,7 +40,11 @@ const SettingScreen = ({navigation}) => {
       // saving error
     }
   };
-  return (
+  return user === null ? (
+    <View>
+      <Text>Loading</Text>
+    </View>
+  ) : (
     <View style={styles.container}>
       <View
         style={{
@@ -65,7 +68,8 @@ const SettingScreen = ({navigation}) => {
           flex: 1,
         }}>
         <View style={styles.settingfield}>
-          <Text style={styles.settingtext}>Hey HariKarthyk</Text>
+          {console.log(user)}
+          <Text style={styles.settingtext}>Hey {user.name}</Text>
           <View style={styles.buttonsection}>
             <TouchableOpacity
               style={styles.button}

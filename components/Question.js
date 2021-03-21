@@ -9,7 +9,7 @@ import {
 
 const {width} = Dimensions.get('window');
 
-const Question = ({navigation, heading, question, author, date, id = '1'}) => {
+const Question = ({navigation, heading, question, author, date, _id, all}) => {
   return (
     <TouchableOpacity
       style={styles.wrapper}
@@ -19,7 +19,8 @@ const Question = ({navigation, heading, question, author, date, id = '1'}) => {
           question: question,
           author: author,
           date: date,
-          id: id,
+          _id: _id,
+          all: all,
         })
       }>
       <View style={styles.action}>
@@ -28,7 +29,7 @@ const Question = ({navigation, heading, question, author, date, id = '1'}) => {
 
           <Text style={styles.question}>{question.substring(0, 150)} ...</Text>
           <View style={styles.actionFooter}>
-            <Text style={styles.author}>{author}</Text>
+            <Text style={styles.author}>{author.name}</Text>
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>

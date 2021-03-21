@@ -1,5 +1,5 @@
 import {Textarea} from 'native-base';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -10,11 +10,42 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Image,
+  Alert,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {addQuestionHelper} from './helper/question';
 const {width, height} = Dimensions.get('screen');
 
 const AskScreen = () => {
+  const [input, setInput] = useState({
+    heading: '',
+    description: '',
+    user: '',
+  });
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@learner_widget');
+      if (value === null) {
+        setUser(value);
+        navigation.replace('Signin');
+      } else setUser(JSON.parse(value));
+    } catch (e) {
+      // error reading value
+    }
+  };
+  const addQuestionHandleListener = () => {
+    addQuestionHelper().then(result => {
+      if (result.error) {
+        Alert.alert('Error', result.message);
+        return;
+      }
+      console.log(result);
+    });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View
