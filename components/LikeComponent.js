@@ -27,7 +27,7 @@ class LikeComponent extends Component {
         style={{
           width: 20,
           height: 20,
-          marginLeft: 15,
+          marginRight: 15,
           marginTop: 10,
           tintColor: '#FF8396',
         }}
@@ -39,7 +39,7 @@ class LikeComponent extends Component {
         style={{
           width: 20,
           height: 20,
-          marginLeft: 15,
+          marginRight: 15,
           marginTop: 10,
           tintColor: 'black',
           borderColor: '#FF8396',
@@ -50,13 +50,10 @@ class LikeComponent extends Component {
     return (
       <View
         style={{
-          width: '40%',
+          width: '50%',
           backgroundColor: 'white',
-          marginHorizontal: 5,
           flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-          alignItems: 'center',
+          marginLeft: '55%',
         }}>
         {/* //?Like Button */}
         <TouchableOpacity onPress={this.handleClick}>

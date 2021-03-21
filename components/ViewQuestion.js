@@ -78,7 +78,9 @@ const ViewQuestion = ({navigation, route}) => {
           <View style={styles.question}>
             <Text style={styles.questionText}>{question}</Text>
             <View style={styles.details}>
-              <Text style={styles.detailsText}>{author.name}</Text>
+              <Text style={[styles.detailsText, {fontWeight: 'bold'}]}>
+                {author.name} {'\t-\t'}
+              </Text>
               <Text style={styles.detailsText}>{date}</Text>
               <LikeComponent />
             </View>
