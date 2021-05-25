@@ -19,9 +19,8 @@ const {width, height} = Dimensions.get('screen');
 
 const AskScreen = ({navigation}) => {
   const [input, setInput] = useState({
-    heading: 'From Frontend',
-    description:
-      'Hello World Hey everyone this is my first Question from Frontend ||',
+    heading: '',
+    description: '',
     user: '',
   });
   const [user, setUser] = useState(null);

@@ -83,33 +83,6 @@ const MainTabScreen = () => {
         component={AskScreen}
       />
       <Tab.Screen
-        name="Like"
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('../assets/icons/like.png')}
-              resizeMode="contain"
-              style={{
-                width: focused ? 35 : 25,
-                height: focused ? 35 : 25,
-                tintColor: focused ? '#66CAC9' : '#C5D8D1',
-              }}
-            />
-          ),
-          tabBarLabel: ({focused}) => (
-            <Text
-              style={{
-                color: focused ? 'black' : '#CDCDD2',
-                fontSize: 10,
-                fontWeight: focused ? 'bold' : 'normal',
-              }}>
-              Saved
-            </Text>
-          ),
-        }}
-        component={LikeScreen}
-      />
-      <Tab.Screen
         name="Setting"
         options={{
           tabBarIcon: ({focused}) => (

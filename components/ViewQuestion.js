@@ -142,11 +142,10 @@ const ViewQuestion = ({navigation, route}) => {
             <View style={styles.details}>
               <View>
                 <Text style={[styles.detailsText, {fontWeight: 'bold'}]}>
-                  - {author.name}
+                  - {author.name} {'\t'} {comments.length} available
                 </Text>
                 <Text style={styles.detailsText}>( {date} )</Text>
               </View>
-              <LikeComponent />
             </View>
           </View>
         </View>

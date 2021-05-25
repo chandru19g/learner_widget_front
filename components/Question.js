@@ -25,7 +25,7 @@ const Question = ({navigation, heading, question, author, date, _id, all}) => {
       }>
       <View style={styles.action}>
         <View style={styles.actionBody}>
-          <Text style={styles.heading}>{heading.substring(0, 10)}</Text>
+          <Text style={styles.heading}>{heading}</Text>
 
           <Text style={styles.question}>{question.substring(0, 150)} ...</Text>
           <View style={styles.actionFooter}>

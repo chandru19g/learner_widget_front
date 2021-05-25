@@ -11,6 +11,7 @@ import SettingScreen from '../SettingScreen';
 import ChangePassword from '../../components/ChangePassword';
 import QuestionAsked from '../../components/QuestionAsked';
 import ViewQuestion from '../../components/ViewQuestion';
+import ForgotPassword from '../../components/ForgotPassword';
 
 const RootStack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const RootStackScreen = ({navigation}) => {
       <RootStack.Screen name="ChangePassword" component={ChangePassword} />
       <RootStack.Screen name="QuestionAsked" component={QuestionAsked} />
       <RootStack.Screen name="ViewQuestion" component={ViewQuestion} />
+      <RootStack.Screen name="ForgotPassword" component={ForgotPassword} />
     </RootStack.Navigator>
   );
 };

@@ -1,4 +1,4 @@
-const API = 'https://the-learner-widget.herokuapp.com/api';
+const API = 'https://learner-widget.herokuapp.com/api';
 
 export const getAllQuestionHelper = () => {
   return fetch(`${API}/all/questions`, {
